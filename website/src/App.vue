@@ -40,8 +40,8 @@ const getListUrl = () => {
   <header class="hero">
     <div class="hero-content">
       <img src="https://raw.githubusercontent.com/Aidoku/Aidoku/main/Aidoku/Assets.xcassets/AppIcon.appiconset/AppIcon-1024x1024.png" alt="Aidoku Logo" class="logo" />
-      <h1>Aidoku Source List</h1>
-      <p class="subtitle">A repository of high-quality, compiled community sources for Aidoku.</p>
+      <h1>kunihir0 Sources</h1>
+      <p class="subtitle">A repository of high-quality sources tailored for Aidoku.</p>
     </div>
     <div class="hero-actions">
       <a :href="getListUrl()" class="global-action-btn">

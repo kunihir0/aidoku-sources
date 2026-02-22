@@ -84,7 +84,7 @@ jobs:
 
       - name: Build Aidoku Source Manifest
         run: |
-          aidoku build sources/*/package.aix --name "Aidoku Community Sources"
+          aidoku build sources/*/package.aix --name "kunihir0 Sources"
           # This should output a `public/` folder containing the packages and `index.json`
 
       - name: Build Website
