@@ -29,10 +29,10 @@ onMounted(async () => {
   }
 })
 
-const getDownloadLink = (source) => {
-  if (source.file) return `./${source.file}`
-  // fallback if no file is specified
-  return `./sources/${source.id}/package.aix`
+const getListUrl = () => {
+  // We need the absolute URL to the hosted index.min.json for the aidoku app
+  const base = window.location.href.replace(/\/$/, '')
+  return `aidoku://addSourceList?url=${base}/index.min.json`
 }
 </script>
 
@@ -42,6 +42,12 @@ const getDownloadLink = (source) => {
       <img src="https://raw.githubusercontent.com/Aidoku/Aidoku/main/Aidoku/Assets.xcassets/AppIcon.appiconset/AppIcon-1024x1024.png" alt="Aidoku Logo" class="logo" />
       <h1>Aidoku Source List</h1>
       <p class="subtitle">A repository of high-quality, compiled community sources for Aidoku.</p>
+    </div>
+    <div class="hero-actions">
+      <a :href="getListUrl()" class="global-action-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+        Add Repository to Aidoku
+      </a>
     </div>
   </header>
 
@@ -80,13 +86,6 @@ const getDownloadLink = (source) => {
         </div>
         
         <p class="description">{{ source.description || 'No description provided.' }}</p>
-        
-        <div class="card-footer">
-          <a :href="getDownloadLink(source)" class="download-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Download Package
-          </a>
-        </div>
       </div>
     </div>
   </main>
@@ -108,6 +107,35 @@ const getDownloadLink = (source) => {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.global-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: var(--accent-color);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.global-action-btn:hover {
+  transform: translateY(-2px);
+  background: var(--accent-hover);
+  box-shadow: 0 15px 25px rgba(99, 102, 241, 0.4);
+  color: #ffffff;
 }
 
 .logo {
@@ -276,34 +304,7 @@ h1 {
   line-clamp: 3;
   -webkit-box-orient: vertical;  
   overflow: hidden;
-}
-
-.card-footer {
-  margin-top: auto;
-  pt: 1rem;
-  border-top: 1px solid var(--glass-border);
-  padding-top: 1rem;
-}
-
-.download-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.75rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: var(--text-primary);
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.source-card:hover .download-btn {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
-  color: #ffffff;
+  margin-bottom: 0.5rem;
 }
 
 footer {
