@@ -26,6 +26,27 @@ To add a new Aidoku source:
    ```
 2. Commit and push the changes. The GitHub Action will automatically build and deploy the new source.
 
+## Updating Sources
+
+If a source has been updated in its own repository, you can pull the latest changes into this repository using the following command:
+
+```bash
+# Update a specific source
+git submodule update --remote sources/<source-name>
+
+# Update ALL sources at once
+git submodule update --remote --merge
+```
+After updating, commit the changes and push to `main` to trigger a new build.
+
+## Contributing
+
+1. Fork the repository.
+2. Add your new source as a submodule under the `sources/` directory.
+3. Submit a Pull Request with your changes. 
+
+Make sure the source compiles successfully with Aidoku before submitting.
+
 ## License
 
 Please refer to the individual source submodules for licensing information.
