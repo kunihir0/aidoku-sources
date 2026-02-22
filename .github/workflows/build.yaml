@@ -1,0 +1,117 @@
+name: Build Sources and Website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "sources/**"
+      - "website/**"
+      - ".github/workflows/build.yaml"
+      - ".gitmodules"
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    env:
+      RUSTC_WRAPPER: sccache
+      SCCACHE_CACHE_SIZE: 2G
+      SCCACHE_VERSION: 0.3.0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache rust stuff
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ~/.cargo/bin
+            sources/**/target/
+          key: ${{ runner.os }}-cargo3-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo3-
+
+      - name: sccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sccache
+          key: ${{ runner.os }}-sccache-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-sccache-
+
+      - name: Setup Rust Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          target: wasm32-unknown-unknown
+
+      - name: Install build dependencies
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sccache
+          if ! command -v aidoku >/dev/null 2>&1; then
+            cargo install --git https://github.com/Aidoku/aidoku-rs aidoku-cli
+          fi
+
+      - name: Build Aidoku Sources
+        run: |
+          for src in ./sources/*; do
+            if [ -d "$src" ]; then
+              (
+                cd "$src"
+                aidoku package
+              )
+            fi
+          done
+
+      - name: Build Aidoku Source Manifest
+        run: |
+          aidoku build sources/*/package.aix --name "Aidoku Community Sources"
+          # This should output a `public/` folder containing the packages and `index.json`
+
+      - name: Build Website
+        run: |
+          cd website
+          npm install
+          npm run build
+
+      - name: Merge Outputs
+        run: |
+          # Copy all the contents of the aidoku public folder into the website dist folder
+          cp -r public/* website/dist/
+          # Now website/dist/ contains both the frontend UI and the repository files.
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.7.2
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          branch: gh-pages
+          folder: website/dist
+          git-config-name: GitHub Actions
+          git-config-email: github-actions[bot]@users.noreply.github.com
+          commit-message: Update source list and website
+          single-commit: true
+
+      - name: Upload merged output artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gh-pages
+          path: website/dist
+          if-no-files-found: ignore
