@@ -5,6 +5,14 @@ const sources = ref([])
 const loading = ref(true)
 const error = ref(null)
 
+// Randomly pick an image from the public/logos/ directory at build time
+const globPaths = import.meta.glob('/public/logos/*.*', { eager: true })
+const logoUrls = Object.keys(globPaths).map(path => path.replace('/public', '.'))
+const randomLogo = ref('')
+if (logoUrls.length > 0) {
+  randomLogo.value = logoUrls[Math.floor(Math.random() * logoUrls.length)]
+}
+
 onMounted(async () => {
   try {
     // Note: The build script copies public/* (including index.json from aidoku build) into the root.
@@ -40,7 +48,7 @@ const getListUrl = () => {
 <template>
   <header class="hero">
     <div class="hero-content">
-      <img src="https://raw.githubusercontent.com/Aidoku/Aidoku/main/Aidoku/Assets.xcassets/AppIcon.appiconset/AppIcon-1024x1024.png" alt="Aidoku Logo" class="logo" />
+      <img v-if="randomLogo" :src="randomLogo" alt="Logo" class="logo" />
       <h1>kunihir0 Sources</h1>
       <p class="subtitle">A repository of high-quality sources tailored for Aidoku.</p>
     </div>
