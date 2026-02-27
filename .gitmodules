@@ -4,3 +4,6 @@
 [submodule "sources/en.violletscans"]
 	path = sources/en.violletscans
 	url = https://github.com/kunihir0/en.violetscans
+[submodule "sources/en.utoon"]
+	path = sources/en.utoon
+	url = https://github.com/kunihir0/en.utoon
