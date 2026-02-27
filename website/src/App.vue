@@ -8,7 +8,8 @@ const error = ref(null)
 onMounted(async () => {
   try {
     // Note: The build script copies public/* (including index.json from aidoku build) into the root.
-    const res = await fetch('./index.json')
+    // Add a cache buster so browsers don't cache the old index.json
+    const res = await fetch('./index.json?t=' + Date.now())
     if (!res.ok) {
       throw new Error('Failed to load source list')
     }
@@ -73,19 +74,19 @@ const getListUrl = () => {
       <div v-for="source in sources" :key="source.id" class="source-card group">
         <div class="card-header">
           <div class="icon-placeholder">
-            <img v-if="source.icon" :src="source.icon" alt="icon" @error="$event.target.style.display='none'" />
+            <img v-if="source.iconURL" :src="source.iconURL" alt="icon" @error="$event.target.style.display='none'" />
             <span v-else>{{ source.name ? source.name.charAt(0).toUpperCase() : '?' }}</span>
           </div>
           <div class="header-info">
             <h2 class="source-name">{{ source.name || 'Unknown Source' }}</h2>
             <div class="badges">
               <span class="badge version">v{{ source.version || '1.0' }}</span>
-              <span class="badge lang" v-if="source.lang">{{ source.lang.toUpperCase() }}</span>
+              <span class="badge lang" v-if="source.languages && source.languages.length">{{ source.languages[0].toUpperCase() }}</span>
             </div>
           </div>
         </div>
         
-        <p class="description">{{ source.description || 'No description provided.' }}</p>
+        <p class="description">{{ source.description || source.baseURL || 'No description provided.' }}</p>
       </div>
     </div>
   </main>
