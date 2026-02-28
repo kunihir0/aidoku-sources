@@ -7,3 +7,6 @@
 [submodule "sources/en.utoon"]
 	path = sources/en.utoon
 	url = https://github.com/kunihir0/en.utoon
+[submodule "sources/en.atsumaru"]
+	path = sources/en.atsumaru
+	url = https://github.com/kunihir0/en.atsumaru
