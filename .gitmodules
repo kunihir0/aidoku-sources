@@ -10,3 +10,6 @@
 [submodule "sources/en.atsumaru"]
 	path = sources/en.atsumaru
 	url = https://github.com/kunihir0/en.atsumaru
+[submodule "sources/en.webcomics"]
+	path = sources/en.webcomics
+	url = https://github.com/kunihir0/en.webcomics
