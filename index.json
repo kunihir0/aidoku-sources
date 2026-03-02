@@ -1,0 +1,65 @@
+{
+  "name": "kunihir0 Sources",
+  "sources": [
+    {
+      "id": "en.atsumaru",
+      "name": "Atsumaru",
+      "version": 2,
+      "iconURL": "icons/en.atsumaru-v2.png",
+      "downloadURL": "sources/en.atsumaru-v2.aix",
+      "languages": [
+        "en"
+      ],
+      "contentRating": 0,
+      "baseURL": "https://atsu.moe/"
+    },
+    {
+      "id": "en.enutoon",
+      "name": "UToon",
+      "version": 3,
+      "iconURL": "icons/en.enutoon-v3.png",
+      "downloadURL": "sources/en.enutoon-v3.aix",
+      "languages": [
+        "en"
+      ],
+      "contentRating": 0,
+      "baseURL": "https://utoon.net/"
+    },
+    {
+      "id": "en.envioletscans",
+      "name": "Violet Scans",
+      "version": 1,
+      "iconURL": "icons/en.envioletscans-v1.png",
+      "downloadURL": "sources/en.envioletscans-v1.aix",
+      "languages": [
+        "en"
+      ],
+      "contentRating": 0,
+      "baseURL": "https://violetscans.org/"
+    },
+    {
+      "id": "en.enwebcomics",
+      "name": "WebComics",
+      "version": 1,
+      "iconURL": "icons/en.enwebcomics-v1.png",
+      "downloadURL": "sources/en.enwebcomics-v1.aix",
+      "languages": [
+        "en"
+      ],
+      "contentRating": 0,
+      "baseURL": "https://webcomicsapp.com"
+    },
+    {
+      "id": "en.luacomics",
+      "name": "Lua Comic",
+      "version": 1,
+      "iconURL": "icons/en.luacomics-v1.png",
+      "downloadURL": "sources/en.luacomics-v1.aix",
+      "languages": [
+        "en"
+      ],
+      "contentRating": 0,
+      "baseURL": "https://luacomic.org"
+    }
+  ]
+}
