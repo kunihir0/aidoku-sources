@@ -51,6 +51,9 @@ const getListUrl = () => {
       <img v-if="randomLogo" :src="randomLogo" alt="Logo" class="logo" />
       <h1>kunihir0 Sources</h1>
       <p class="subtitle">A repository of high-quality sources tailored for Aidoku.</p>
+      <a href="https://discord.gg/kewAMeJypQ" target="_blank">
+        <img src="https://discord.com/api/guilds/1475329802532552869/widget.png?style=shield" alt="Discord Shield">
+      </a>
     </div>
     <div class="hero-actions">
       <a :href="getListUrl()" class="global-action-btn">
